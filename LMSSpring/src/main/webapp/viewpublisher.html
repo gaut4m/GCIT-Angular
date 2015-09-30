@@ -1,0 +1,90 @@
+
+
+  <script>
+function pagePublishers(a){
+	$.ajax({
+		  url: "pagePublishers",
+		  data: { searchString: $('#searchString').val(),pageNo:a}
+		})
+		  .done(function( data ) {
+		    $('#publisherTable').html(data);
+		  });
+}
+</script>
+ 
+<div class="container" ng-controller="publisherCtrl">
+<div class="container-fluid">
+      <div class="row">
+      
+        <div class="col-sm-3 col-md-2 sidebar">
+        <br>
+          <ul class="nav nav-sidebar">
+            <li><a href="#/addpublisher">Add publisher</a></li>
+            <li class="active"><a href="#/viewpublisher">View publishers</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-6  col-md-10  main">
+        <br>
+        <input type="text" class="col-md-8" id="searchString" ng-model="searchString"
+		placeholder="Enter Publisher Details to search">
+		<input type="button" value="Search!" ng-click="searchPublisher()">
+        
+          <h1 class="sub-header">View Existing Publishers</h1>
+			 {{message}}
+			 
+			  <div id="populatePublishers">
+			 
+			 <nav>
+  	<ul class="pagination">
+  		
+  </ul>
+</nav>
+			 <div class="table-responsive">
+            <table class="table table-striped" id="publisherTable">
+
+	<thead>
+	<tr>
+	
+	<th>Publisher Name</th>
+	<th>Publisher Address</th>
+	<th>Publisher Phone</th>
+	
+	<th>Edit Publisher</th>
+	<th>Delete Publisher</th>
+	</tr>
+	</thead>
+	
+		<tr  ng-repeat="p in pubs">
+			
+			<td align="center" >
+			{{p.publisherName}}</td>
+			<td align="center">{{p.publisherAddress}}</td>
+			<td align="center">{{p.publisherPhone}}</td>
+		
+			
+			<td align="center"><button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModal1" href="editpublisher?publisherId={{p.getPublisherId()}}">EDIT</button></td>
+			<td align="center"><button type="button" class="btn btn-sm btn-danger" onclick="javascript:location.href='deletePublisher?publisherId=<%=p.getPublisherId()%>'">DELETE</button></td>
+			</tr>
+	
+	
+</table>
+</div>
+</div>
+          
+          </div>
+        
+      </div>
+    </div>
+
+    </div><!-- /.container -->
+<div id="myModal1" class="modal fade" tabindex="-1" role="dialog"
+	aria-labelledby="myLargeModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Publisher</h4>
+      </div>
+		</div>
+	</div>
+</div>

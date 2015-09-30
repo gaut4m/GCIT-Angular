@@ -1,0 +1,103 @@
+<script>
+function searchAuthors(){
+	$.ajax({
+		  url: "searchAuthors",
+		  data: { searchString: $('#searchString').val()}
+	, success: function(data){
+		$('#populateAuthors').html(data);
+    }});
+		  
+}
+function pageAuthors(a){
+	$.ajax({
+		  url: "pageAuthors",
+		  data: { searchString: $('#searchString').val(),pageNo:a}
+		})
+		  .done(function( data ) {
+		    $('#authorsTable').html(data);
+		  });
+}
+
+function validateForm(a)
+{}
+</script>
+ 
+ 
+<div class="container" role="main" ng-controller="authorCtrl">
+<div class="container-fluid">
+      <div class="row">
+      
+        <div class="col-sm-3 col-md-2 sidebar">
+        <br>
+          <ul class="nav nav-sidebar">
+           
+            <li ><a href="#/addauthor">Add Author</a></li>
+            <li class="active"><a href="#/viewauthors">View Authors</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-7  col-md-10  main">
+        
+		<input type="text" class="col-md-8" id="searchString" ng-model="searchString"
+		placeholder="Enter Author name to search">
+		<input type="button" value="Search!" ng-click="searchAuthor()">
+
+          <h1 class="sub-header">View Authors</h1>
+			 {{message}}
+			 
+			 <div >
+			 
+			 <nav>
+  	<ul class="pagination">
+  		
+  </ul>
+</nav>
+           <div class="table-responsive">
+            <table class="table table-striped" id="authorsTable">
+
+	<thead>
+	<tr>
+	<th>Author Name</th>
+	<th>Update Author</th>
+	<th> Delete Author</th>
+	</tr>
+	</thead>
+	
+	
+		<tr  ng-repeat="a in authors">
+			
+			<td  ><input type="text"  id="id" name="id" value="{{a.authorId}}" style="display:none">
+			{{a.authorName}}</td>
+			<td ><button type="button" class="btn btn-sm btn-info" ng-click="update(a.authorId,'a.authorName')" >EDIT</button></td>
+			
+			<td ><button type="button" class="btn btn-sm btn-danger"  ng-click="javascript:location.href='deleteAuthor?authorId=a.authorId'">DELETE</button></td>
+			
+			</tr>
+	
+</table>
+</div>
+</div>
+          </div>
+        
+      </div>
+    </div>
+
+    </div><!-- /.container -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal.html" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"> Update Author Name</h4>
+      </div>
+      <div class="modal-body">
+      		<form >
+			<input type="text"  id="authorId" ng-model="authorId" value="{{$scope.author.authorId}}" style="display:none">
+			<input type="text" id="authorName" ng-model="authorName" value="{{$scope.author.authorName}}">
+			<input type="button" ng-click="editAuthor()" value="Submit">
+			</form>
+      </div>
+    </div>
+  </div>
+</div>

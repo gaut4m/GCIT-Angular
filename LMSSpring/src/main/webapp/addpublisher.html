@@ -1,0 +1,38 @@
+
+<div class="container">
+<div class="container-fluid">
+      <div class="row">
+      
+        <div class="col-sm-3 col-md-2 sidebar">
+        <br>
+          <ul class="nav nav-sidebar">
+            <li ><a href="publisher">Overview <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="#/addpublisher">Add publisher</a></li>
+            <li><a href="#/viewpublisher">View publishers</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-6  col-md-10  main">
+          <h1 class="sub-header">Add Publisher</h1>
+			 {{message}}
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+          <form >
+	
+		Enter Publisher Name: <input type="text" ng-model="pub.publisherName" name="publisherName"><br/>
+		Enter Publisher Address: <input type="text" ng-model="pub.publisherAddress" name="publisherAddr"><br/>
+		Enter Publisher Phone: <input type="text" ng-model="pub.publisherPhone"><br/>
+		 
+		<input type="button" value="Submit" ng-click="addPublisher()">
+	
+	</form>
+            </div>
+           
+          </div>
+          </div>
+        
+      </div>
+    </div>
+
+    </div><!-- /.container -->
+
+	

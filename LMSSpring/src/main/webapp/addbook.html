@@ -1,0 +1,350 @@
+<div class="container" ng-Controller="bookCtrl">
+<div class="container-fluid">
+      <div class="row">
+      
+        <div class="col-sm-3 col-md-2 sidebar">
+        <br>
+          <ul class="nav nav-sidebar navbar-nav">
+            <li><a href="book">Overview <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="#/addbook">Add Book</a></li>
+            <li><a href="#/viewbooks">View Books</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-6  col-md-10  main">
+          <h1 class="sub-header">Book Management</h1>
+			 {{message}}
+			 <p id="demo" color = "red"></p>
+          <div class="row placeholders">
+            
+<form name="myform" action="insertBook" onSubmit="return validateForm()" method="post">
+
+
+
+<label>Select Author:</label>
+<select id="authorId" name="authorId" multiple>
+<%for(Author a: authors){ %>
+	<option value="<%=a.getAuthorId()%>" ><%=a.getAuthorName() %></option>	
+<%} %>
+</select>
+<input type="text" name="authorCnt" id="authorCnt" style="display:none" >
+<div id='TextBoxesAuthor'>
+</div>
+<input type='button' value='New Author' id='addAuthor'>
+<input type='button' value='Remove Author' id='removeAuthor'>
+</br>
+</br>
+
+<label>Select Publisher:</label>
+
+<select id="pubId" name="pubId" onChange="selectPub()">
+<option value="select"> ----Select----</option>
+<option value="new" >New Publisher</option>
+<%for(Publisher p: pubs){ %>
+	<option value="<%=p.getPublisherId() %>" ><%=p.getPublisherName() %></option>	
+<%} %>
+</select>
+</br>
+</br>
+<table id="pubDetails" style="display:none">
+
+
+<tr>
+<td>Publisher Name:</td>
+<td><input type="text" id="pubName" name="pubName" value=""></td>
+</tr>
+
+<tr>
+<td>Publisher Address:</td>
+<td><input type="text" id="pubAddr" name="pubAddr" value=""></td>
+</tr>
+<tr>
+<td>Publisher Phone:</td>
+<td><input type="text" id="pubPhone" name="pubPhone" value=""></td>
+</tr>
+</table>
+</br>
+</br>
+<label>Select Genre:</label>
+<select id="genreId" name="genreId" multiple>
+<%for(Genre a: genres){ %>
+	<option value="<%=a.getGenreId()%>" ><%=a.getGenreName() %></option>	
+<%} %>
+</select>
+</br>
+</br>
+<input type="text" name="genreCnt" id="genreCnt" style="display:none" >
+<div id='TextBoxesGenre'>
+</div>
+<input type='button' value='New Genre' id='addGenre'>
+<input type='button' value='Remove Genre' id='removeGenre'>
+<br>
+</br>
+<label>Book Name:</label>
+<input type="text" id="title" name="title" value="">
+<br>
+<input type="submit" value="Submit">
+
+
+</form>
+           
+          </div>
+          </div>
+        
+      </div>
+    </div>
+
+    </div><!-- /.container -->
+
+	 <!-- FOOTER -->
+      <footer class="navbar-fixed-bottom container">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>� 2014 Company, Inc. � <a href="http://getbootstrap.com/examples/carousel/#">Privacy</a> � <a href="http://getbootstrap.com/examples/carousel/#">Terms</a></p>
+      </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./template_files/jquery.min.js"></script>
+    <script src="./template_files/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="./template_files/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./template_files/ie10-viewport-bug-workaround.js"></script>
+    
+    <script type="text/javascript">
+
+$(document).ready(function(){
+
+    var counter = 1;
+    var countg = 1;
+    $('#authorCnt').val(counter);
+    $('#genreCnt').val(countg);
+    $("#addAuthor").click(function () {
+				
+	if(counter>10){
+            alert("Only 10 textboxes allow");
+            return false;
+	}   
+		
+	var newTextBoxAuthor = $(document.createElement('div'))
+	     .attr("id", 'TextBoxAuthor' + counter);
+                
+	newTextBoxAuthor.after().html('<label>NewAuthor #'+ counter + ' : </label>' +
+	      '<input type="text" name="Author' + counter + 
+	      '" id="Author' + counter + '" value="" >');
+            
+	newTextBoxAuthor.appendTo("#TextBoxesAuthor");	
+	counter++;
+	$('#authorCnt').val(counter);
+     });
+    
+    $("#addGenre").click(function () {
+		
+    	if(countg>10){
+                alert("Only 10 textboxes allow");
+                return false;
+    	}   
+    		
+    	var newTextBoxGenre = $(document.createElement('div'))
+    	     .attr("id", 'TextBoxGenre' + countg);
+                    
+    	newTextBoxGenre.after().html('<label>NewGenre #'+ countg + ' : </label>' +
+    	      '<input type="text" name="Genre' + countg + 
+    	      '" id="Genre' + countg + '" value="" >');
+                
+    	newTextBoxGenre.appendTo("#TextBoxesGenre");
+
+    				
+    	countg++;
+    	$('#genreCnt').val(countg);
+         });
+
+     $("#removeAuthor").click(function () {
+	if(counter==1){
+          alert("No more textbox to remove");
+          return false;
+       }   
+        
+	counter--;
+	
+        $("#TextBoxAuthor" + counter).remove();
+        $('#authorCnt').val(counter);
+       	
+     });
+     
+     $("#removeGenre").click(function () {
+    		if(countg==1){
+    	          alert("No more textbox to remove");
+    	          return false;
+    	       }   
+    	        
+    		countg--;
+    		
+    	        $("#TextBoxGenre" + countg).remove();
+    	        $('#genreCnt').val(countg);	
+    	     });
+		
+     $("#getAuthorValue").click(function () {
+		
+	var msg = '';
+	for(i=1; i<counter; i++){
+   	  msg += "\n Author #" + i + " : " + $('#Author' + i).val();
+	}
+	msg+=$('#authorCnt').val();
+    	  alert(msg);
+     });
+     
+     $("#getGenreValue").click(function () {
+ 		
+    		var msg = '';
+    		for(i=1; i<countg; i++){
+    	   	  msg += "\n Genre #" + i + " : " + $('#Genre' + i).val();
+    		}
+    		msg+= $('#genreCnt').val();
+    		
+    	    	  alert(msg);
+    	     });
+  });
+</script>
+    <script>
+
+
+
+
+function myFunction() {
+    var authorName = document.getElementById("authorId").value;
+    var e = document.getElementById("authorDetails");
+    
+   
+if(authorName == "new"){
+	
+	if(e.style.display == 'none')
+	       e.style.display = '';
+    
+}else{
+	if(e.style.display == '')
+	       e.style.display = 'none';
+}
+   
+}
+function selectPub(){
+	var pub = document.getElementById("pubId").value;
+	
+	
+  
+    var e = document.getElementById("pubDetails");
+    
+    
+    if(pub == "new"){
+    	
+    	if(e.style.display == 'none')
+    	       e.style.display = '';
+        
+    }else{
+    	if(e.style.display == '')
+    	       e.style.display = 'none';
+    }
+       
+	
+}
+function validateForm() {
+	 var authorName = document.getElementById("authorId").value;
+	
+	    var pub = document.getElementById("pubId").value;
+	    var title = document.getElementById("title").value;
+	    var demo="";
+	    
+	   if(pub == "new")
+	    	{
+	    	var pubName = document.getElementById("pubName").value;
+	    	var pubAddr = document.getElementById("pubAddr").value;
+	    	var pubPhone = document.getElementById("pubPhone").value;
+	    	if( pubName == null || pubName == "")
+	    		demo += "Publisher Name should not be empty. ";
+	    	if(pubAddr == null || pubAddr == "")
+	    		demo+= "Publisher Address should not be empty. ";
+	    	if(pubPhone == null || pubAddr == "")
+	    		demo+= "Publisher Phone should not be empty. ";
+	    	}
+	    
+	   if(title == "" || title == null)
+		   demo += "Book title should not be empty. ";
+	    	
+	    	
+	    	document.getElementById("demo").innerHTML = demo;
+	    	
+	    	if(demo != "")
+	   			return false;
+	
+   
+}
+
+
+</script>
+  <script type="text/javascript">
+(function() {
+    
+    function getSelectedOptions(sel, fn) {
+        var opts = [], opt;
+        
+        // loop through options in select list
+        for (var i=0, len=sel.options.length; i<len; i++) {
+            opt = sel.options[i];
+            
+            // check if selected
+            if ( opt.selected ) {
+                // add to array of option elements to return from this function
+                opts.push(opt);
+                
+                // invoke optional callback function if provided
+                if (fn) {
+                    fn(opt);
+                }
+            }
+        }
+        
+        // return array containing references to selected option elements
+        return opts;
+    }
+    
+    // anonymous function onchange for select list with id demoSel
+    document.getElementById('authorId').onchange = function(e) {
+        // get reference to display textarea
+        var display = document.getElementById('display');
+        display.innerHTML = ''; // reset
+        
+        // callback fn handles selected options
+        getSelectedOptions(this, callback);
+        
+        // remove ', ' at end of string
+        var str = display.innerHTML.slice(0, -2);
+        display.innerHTML = str;
+    };
+    
+    document.getElementById('demoForm').onsubmit = function(e) {
+        // reference to select list using this keyword and form elements collection
+        // no callback function used this time
+        var opts = getSelectedOptions( this.elements['demoSel[]'] );
+        
+        alert( 'The number of options selected is: ' + opts.length ); //  number of selected options
+        
+        return false; // don't return online form
+    };
+    
+    // example callback function (selected options passed one by one)
+    function callback(opt) {
+        // can access properties of opt, such as...
+        //alert( opt.value )
+        //alert( opt.text )
+        //alert( opt.form )
+        
+        // display in textarea for this example
+        var display = document.getElementById('display');
+        display.innerHTML += opt.value + ', ';
+    }
+    
+}());
+
+</script>
+
+</body></html>

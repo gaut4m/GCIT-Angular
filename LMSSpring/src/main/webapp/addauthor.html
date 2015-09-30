@@ -1,0 +1,53 @@
+<div class="container" role="main" ng-controller="authorCtrl">
+<div class="container-fluid">
+      <div class="row">
+      
+        <div class="col-sm-3 col-md-2 sidebar">
+        <br>
+          <ul class="nav nav-sidebar">
+            <li><a href="#/addauthor">Add Author</a></li>
+            <li><a href="#/viewauthors">View Authors</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-6  col-md-10  main">
+          <h1 class="sub-header">Add New Author</h1>
+			 {{message}}
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+           <form novalidate>
+	
+		Enter Author Name: <input type="text" ng-model="author.authorName" name="authorName">
+		
+		 
+		<input type="button" class="btn btn-sm btn-success" ng-click="addAuthor()" value="Add">
+	
+	</form>
+              
+            </div>
+           
+          </div>
+          </div>
+        
+      </div>
+    </div>
+
+    </div><!-- /.container -->
+
+	 <!-- FOOTER -->
+      <footer class="navbar-fixed-bottom container">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>© 2014 Company, Inc. · <a href="http://getbootstrap.com/examples/carousel/#">Privacy</a> · <a href="http://getbootstrap.com/examples/carousel/#">Terms</a></p>
+      </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./template_files/jquery.min.js"></script>
+    <script src="./template_files/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="./template_files/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./template_files/ie10-viewport-bug-workaround.js"></script>
+  
+
+</body></html>
